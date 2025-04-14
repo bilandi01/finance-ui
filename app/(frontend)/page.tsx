@@ -1,6 +1,5 @@
-import Image from "next/image";
-import Page from "./dashboard/page";
 import { ThemeProvider } from "@/components/theme-provider";
+import Page from "./dashboard/page";
 
 export default function Home() {
   return (
