@@ -103,7 +103,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const schema = z.object({
   id: z.number(),
-  header: z.string(),
+  name: z.string(),
   type: z.string(),
   status: z.string(),
   target: z.string(),
@@ -164,8 +164,8 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "header",
-    header: "Header",
+    accessorKey: "name",
+    header: "Name",
     cell: ({ row }) => {
       return <TableCellViewer item={row.original} />;
     },
@@ -207,7 +207,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
         onSubmit={(e) => {
           e.preventDefault();
           toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-            loading: `Saving ${row.original.header}`,
+            loading: `Saving ${row.original.name}`,
             success: "Done",
             error: "Error",
           });
@@ -232,7 +232,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
         onSubmit={(e) => {
           e.preventDefault();
           toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-            loading: `Saving ${row.original.header}`,
+            loading: `Saving ${row.original.name}`,
             success: "Done",
             error: "Error",
           });
@@ -400,14 +400,14 @@ export function DataTable({
 
   return (
     <Tabs
-      defaultValue="outline"
+      defaultValue="pantry"
       className="flex w-full flex-col justify-start gap-6"
     >
       <div className="flex items-center justify-between px-4 lg:px-6">
         <Label htmlFor="view-selector" className="sr-only">
           View
         </Label>
-        <Select defaultValue="outline">
+        <Select defaultValue="pantry">
           <SelectTrigger
             className="@4xl/main:hidden flex w-fit"
             id="view-selector"
@@ -415,25 +415,25 @@ export function DataTable({
             <SelectValue placeholder="Select a view" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="outline">Outline</SelectItem>
-            <SelectItem value="past-performance">Past Performance</SelectItem>
-            <SelectItem value="key-personnel">Key Personnel</SelectItem>
-            <SelectItem value="focus-documents">Focus Documents</SelectItem>
+            <SelectItem value="pantry">Pantry</SelectItem>
+            <SelectItem value="wifi">Wifi</SelectItem>
+            <SelectItem value="subscriptions">Subscriptions</SelectItem>
+            <SelectItem value="upcoming-events">Upcoming Events Documents</SelectItem>
           </SelectContent>
         </Select>
         <TabsList className="@4xl/main:flex hidden">
-          <TabsTrigger value="outline">Outline</TabsTrigger>
-          <TabsTrigger value="past-performance" className="gap-1">
-            Past Performance{" "}
-            <Badge
+          <TabsTrigger value="pantry">Pantry</TabsTrigger>
+          <TabsTrigger value="wifi" className="gap-1">
+            Wifi
+            {/* <Badge
               variant="secondary"
               className="flex h-5 w-5 items-center justify-center rounded-full bg-muted-foreground/30"
             >
               3
-            </Badge>
+            </Badge> */}
           </TabsTrigger>
-          <TabsTrigger value="key-personnel" className="gap-1">
-            Key Personnel{" "}
+          <TabsTrigger value="subscriptions" className="gap-1">
+            Subscriptions
             <Badge
               variant="secondary"
               className="flex h-5 w-5 items-center justify-center rounded-full bg-muted-foreground/30"
@@ -441,7 +441,7 @@ export function DataTable({
               2
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value="focus-documents">Focus Documents</TabsTrigger>
+          <TabsTrigger value="upcoming-events">Upcoming Events</TabsTrigger>
         </TabsList>
         <div className="flex items-center gap-2">
           <DropdownMenu>
@@ -484,7 +484,7 @@ export function DataTable({
         </div>
       </div>
       <TabsContent
-        value="outline"
+        value="pantry"
         className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6"
       >
         <div className="overflow-hidden rounded-lg border">
@@ -616,17 +616,14 @@ export function DataTable({
           </div>
         </div>
       </TabsContent>
-      <TabsContent
-        value="past-performance"
-        className="flex flex-col px-4 lg:px-6"
-      >
+      <TabsContent value="wifi" className="flex flex-col px-4 lg:px-6">
         <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
       </TabsContent>
-      <TabsContent value="key-personnel" className="flex flex-col px-4 lg:px-6">
+      <TabsContent value="subscriptions" className="flex flex-col px-4 lg:px-6">
         <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
       </TabsContent>
       <TabsContent
-        value="focus-documents"
+        value="upcoming-events"
         className="flex flex-col px-4 lg:px-6"
       >
         <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
@@ -662,12 +659,12 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="link" className="w-fit px-0 text-left text-foreground">
-          {item.header}
+          {item.name}
         </Button>
       </SheetTrigger>
       <SheetContent side="right" className="flex flex-col">
         <SheetHeader className="gap-1">
-          <SheetTitle>{item.header}</SheetTitle>
+          <SheetTitle>{item.name}</SheetTitle>
           <SheetDescription>
             Showing total visitors for the last 6 months
           </SheetDescription>
@@ -732,8 +729,8 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
           )}
           <form className="flex flex-col gap-4">
             <div className="flex flex-col gap-3">
-              <Label htmlFor="header">Header</Label>
-              <Input id="header" defaultValue={item.header} />
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" defaultValue={item.name} />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-3">
@@ -754,8 +751,8 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
                     </SelectItem>
                     <SelectItem value="Design">Design</SelectItem>
                     <SelectItem value="Capabilities">Capabilities</SelectItem>
-                    <SelectItem value="Focus Documents">
-                      Focus Documents
+                    <SelectItem value="Upcoming Events">
+                      Upcoming Events
                     </SelectItem>
                     <SelectItem value="Narrative">Narrative</SelectItem>
                     <SelectItem value="Cover Page">Cover Page</SelectItem>

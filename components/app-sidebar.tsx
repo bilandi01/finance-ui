@@ -201,7 +201,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <a href="#">
                 <img src="/transparent-logo-white.png" className="h-5 w-5" />
                 <span className="text-base font-semibold">
-                  Exfalir Finances
+                  Exaflair Finances
                 </span>
               </a>
             </SidebarMenuButton>
